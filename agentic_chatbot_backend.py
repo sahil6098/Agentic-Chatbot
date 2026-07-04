@@ -7,10 +7,16 @@ from langgraph.checkpoint.memory import MemorySaver
 
 from dotenv import load_dotenv
 load_dotenv()
+"""
+#llm = ChatGoogleGenerativeAI(
+   # model="gemini-2.5-flash",
+   # temperature=0,
+)
+"""
+from langchain_groq import ChatGroq
 
-llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash",
-    temperature=0,
+llm = ChatGroq(
+    model="llama-3.3-70b-versatile",
 )
 
 #Desfining state
