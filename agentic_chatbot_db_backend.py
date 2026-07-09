@@ -38,8 +38,11 @@ def chat_node(state: ChatState):
     #response store state
     return {"messages":[response]}
     
-    
-checkpoint = SqliteSaver()
+
+conn = sqlite3.connect(database='chatbot.db', check_same_thread=False)
+
+
+checkpoint = SqliteSaver(conn)
 
 graph = StateGraph(ChatState)
 
@@ -53,3 +56,14 @@ graph.add_edge('chat_node', END)
 
 #Compile the graph
 chatbot = graph.compile(checkpointer=checkpoint)
+
+def get_all_threads():
+    all_threads = set()
+
+    for ckpt in checkpoint.list(None):
+        all_threads.add(ckpt.config['configurable']['thread_id'])
+
+    return list(all_threads)
+
+
+
