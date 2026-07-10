@@ -95,7 +95,7 @@ def get_current_weather(location: str) -> str:
 
     try:
         # Step 1: Convert the location name into latitude and longitude
-        geocoding_url = "https://api.openweathermap.org/geo/1.0/direct"
+        geocoding_url = "https://api.openweathermap.org/data/2.5/weather"
 
         geocoding_params = {
             "q": location,
