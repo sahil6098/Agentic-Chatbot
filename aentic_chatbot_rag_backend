@@ -43,7 +43,19 @@ def ingest_rag_document(file_path):
     vector_store = FAISS.from_documents(chunks, embeddings)
     vector_store.save_local(DB_PATH)
     
-
+def get_retriever():
+    DB_PATH = "faiss_db"
+    vector_store = FAISS.load_local(
+        folder_path=DB_PATH, 
+        embedding=embeddings,
+        allow_dangerous_deserialization=True
+    )
+    
+    retriever = vector_store.as_retriever(
+        search_type="similarity",
+        search_kwargs={"k": 3}
+    )
+    return retriever
 
 
 # Tools
