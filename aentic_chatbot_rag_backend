@@ -53,11 +53,45 @@ def get_retriever():
     
     retriever = vector_store.as_retriever(
         search_type="similarity",
-        search_kwargs={"k": 3}
+        search_kwargs={"k": 4}
     )
     return retriever
 
+#Rag tool
 
+@tool
+def rag_tool(query: str) -> str:
+    """
+    Retrive relevant information from the pdf document.
+    
+    Use this tool when user asks the factual or conceptual questions
+    that may require information from the pdf document.
+    
+    Args:
+        query: The question or search query used to retrive pdf content.
+    """
+    
+    retriever = get_retriever()
+    documents = retriever.invoke(query)
+    
+    if not documents:
+        return "No relevant information found in the document."
+    
+    formatted_documents = []
+    
+    for index,document in enumerate(documents, start = 1):
+        source = document.metadata.get("source", "Unknown source")
+        page = document.metadata.get("page", "Unknown page")
+        
+        formatted_documents.append(
+            f"Document {index}:\n"
+            f"Source: {source}\n"
+            f"Page: {page}\n"
+            f"Content: {document.page_content}\n"
+        )
+        
+    return "\n".join(formatted_documents)  
+    
 # Tools
 
 search_tool = TavilySearch(
