@@ -153,17 +153,17 @@ def get_current_weather(location: str) -> str:
         A formatted current weather report.
     """
 
-    api_key = os.getenv("OPENWEATHER_API_KEY")
+    api_key = os.getenv("OPENWEATHER_API_KEY") or os.getenv("WEATHER_API_KEY")
 
     if not api_key:
         return (
             "Weather API key is missing. "
-            "Set the OPENWEATHER_API_KEY environment variable."
+            "Set OPENWEATHER_API_KEY or WEATHER_API_KEY in your .env file."
         )
 
     try:
         # Step 1: Convert the location name into latitude and longitude
-        geocoding_url = "https://api.openweathermap.org/data/2.5/weather"
+        geocoding_url = "https://api.openweathermap.org/geo/1.0/direct"
 
         geocoding_params = {
             "q": location,
@@ -235,8 +235,8 @@ def get_current_weather(location: str) -> str:
         return (
             f"Current weather in {display_location}:\n"
             f"- Condition: {description.title()}\n"
-            f"- Temperature: {temperature}°C\n"
-            f"- Feels like: {feels_like}°C\n"
+            f"- Temperature: {temperature} C\n"
+            f"- Feels like: {feels_like} C\n"
             f"- Humidity: {humidity}%\n"
             f"- Pressure: {pressure} hPa\n"
             f"- Wind speed: {wind_speed} m/s\n"

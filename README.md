@@ -12,10 +12,11 @@ A small Python chatbot workflow project using LangGraph and LangChain integratio
 pip install -r requirements.txt
 ```
 
-4. Copy `.env.example` to `.env` and add your API key:
+4. Copy `.env.example` to `.env` and add your API keys:
 
 ```bash
 GOOGLE_API_KEY=your-google-api-key
+WEATHER_API_KEY=your-openweathermap-api-key
 ```
 
 ## Usage
